@@ -1,0 +1,198 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <windows.h>
+#include <locale.h>
+
+int menu();
+long factorial(long);
+int numeroBits(int);
+int cambiarBits(int, int, int);
+void intercambiar(double *, double *);
+
+int main ()
+{
+    int opcion;
+    SetConsoleOutputCP(CP_UTF8);
+    setlocale(LC_ALL, ".UTF8");
+    setvbuf(stdout, NULL, _IONBF, 0);
+
+    long xl, yl;
+    int n;
+    int nbits;
+    int p;
+    int nbts;
+
+    printf("PRACTICA 2\n");
+    printf("==========\n");
+
+    opcion = menu();
+
+    while (opcion != 10)
+    {
+        switch (opcion)
+        {
+            case 1:
+                printf("Ejercicio 1: desplazar\n");
+                break;
+
+            case 2:
+                printf("Ejercicio 2: par o impar\n");
+                break;
+
+            case 3:
+                printf("Ejercicio 3: operaciones lógicas y a nivel de bits\n");
+                break;
+
+            case 4:
+                printf("Ejercicio 4: poner a cero un bit\n");
+                break;
+
+            case 5:
+                printf("Ejercicio 5: obtener valor bit\n");
+                break;
+
+            case 6:
+                printf("Ejercicio 6: factorial\n");
+                do {
+                    printf("Introduzca un número entero positivo: ");
+                    scanf("%ld", &yl);
+                } while (yl < 0);
+
+                xl = factorial(yl);
+                if (xl== -1)
+                    printf("No es posible calcular el factorial\n");
+                else
+                    printf("El factorial de %ld es: %ld\n\n", yl, xl);
+                break;
+
+            case 7:
+                printf("Ejercicio 7: número de bits\n");
+                do {
+                    printf("Introduzca un número entero positivo: ");
+                    scanf("%d", &n);
+                } while ( n<= 0);
+                nbits = numeroBits(n);
+                printf("El número mínimo de bits necesarios para representar %d es: %d\n", n, nbits);
+                break;
+
+            case 8:
+            {
+                int numero, p, nbits, resultado;
+                printf("Ejercicio 8: cambiar bits\n");
+
+                do {
+                    printf("Introduzca un número entero positivo: ");
+                    scanf("%d", &numero);
+                } while (numero < 0);
+
+                do {
+                    printf("Posición del bit inicial a invertir (0 - 31): ");
+                    scanf("%d", &p);
+                } while (p < 0 || p > 31);
+
+                do {
+                    printf("Número de bits a invertir: ");
+                    scanf("%d", &nbits);
+                } while (nbits <= 0 || nbits > p + 1);
+
+                resultado = cambiarBits(numero, p, nbits);
+
+                printf("\nNúmero original: %d\n", numero);
+                printf("Número transformado: %d\n", resultado);
+            }
+                break;
+
+            case 9:
+            {
+                double a, b;
+                printf("Ejercicio 9: intercambiar\n");
+                printf("Introduzca el primer número: ");
+                scanf("%lf", &a);
+                printf("Introduzca el segundo número: ");
+                scanf("%lf", &b);
+
+                intercambiar(&a, &b);
+
+                printf("Primer número después del intercambio: %lf\n", a);
+                printf("Segundo número después del intercambio: %lf\n", b);
+            }
+                break;
+
+            default:
+                printf("ERROR: Opción incorrecta.\n");
+                break;
+        }
+
+        opcion = menu();
+    }
+
+    return 0;
+}
+
+long factorial(long n)
+{
+    long factorial = 1;
+    if (n < 0 || n > 16) return -1;
+    while (n > 0) {
+        factorial = n * factorial;
+        n = n - 1;
+    }
+    return factorial;
+}
+
+int numeroBits(int n)
+{
+    int dosElevadoN = 2, nbits = 1;
+    while (dosElevadoN <= n)
+    {
+        dosElevadoN *= 2;
+        nbits++;
+    }
+    return nbits;
+}
+
+int cambiarBits(int numero, int p, int n)
+{
+    if (n <= 0 || n > p + 1) {
+        return -1;
+    }
+
+    int mascara = (1 << n) - 1;
+    mascara <<= (p - n + 1);
+    int resultado = numero ^ mascara;
+
+    return resultado;
+}
+
+void intercambiar(double *x, double *y)
+{
+    double aux = *x;
+    *x = *y;
+    *y = aux;
+}
+
+int menu()
+{
+    int op;
+    do
+    {
+        printf("\n"
+               "\t01.- Desplazar\n"
+               "\t02.- Par o Impar\n"
+               "\t03.- Operaciones lógicas y a nivel de bits\n"
+               "\t04.- Poner a cero un bit\n"
+               "\t05.- Obtener valor bit\n"
+               "\t06.- Factorial\n"
+               "\t07.- Número de bits\n"
+               "\t08.- Cambiar bits\n"
+               "\t09.- Intercambiar\n"
+               "\t10.- Salir\n"
+               "\n"
+               "Elija una opción: ");
+        scanf("%d", &op);
+        if (op < 1 || op > 10)
+            printf("Opci%cn no v%clida\n", 0xA2, 0xA0);
+    }
+    while (op < 1 || op > 10);
+    return op;
+}
