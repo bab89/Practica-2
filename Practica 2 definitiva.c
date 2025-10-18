@@ -1,7 +1,4 @@
-//
-// Created by bruno on 18/10/2025.
-//
-//
+
 // Created by Miriam on 02/10/2025.
 //
 // practica2.c
@@ -13,9 +10,17 @@
 #include <locale.h>
 // DECLARACIONES DE FUNCIONES
 int menu(); // declaración de la función "menu"
+int desplazar(int, int);
+int parImpar(int);
+void operacionesLogicasBits();
 int ponerACeroBit(int, int);
 int obtenerValorBit(int , int);
 long factorial(long);
+long factorial(long);
+int numeroBits(int);
+int cambiarBits(int, int, int);
+void intercambiar(double *, double *);
+
 int main ()
 {
     // DEFINICIONES DE VARIABLES
@@ -29,6 +34,7 @@ int main ()
     int n, nposbit, resultado, valorBit;
     int nbits;
     int x = 0, y = 0, z = 0;
+    int p;
 
     /* Usar las dos líneas siguientes, si con Windows no aparecen
     las vocales acentuadas al imprimir texto por pantalla. */
@@ -45,8 +51,7 @@ int main ()
                 printf("Ejercicio 1: desplazar\n"); // llama a la función "printf"
                 // Llamar a la función "desplazar"
                 // Llamar a la función "desplazar"
-                printf("Ejercicio 1:\n"); // llama a la función
-                "printf"
+                printf("Ejercicio 1:\n"); // llama a la función"printf"
                 // Solicitar datos introducidos por el teclado
                 printf("Introduzca un número: ");
                 scanf("%d", &y);
@@ -125,8 +130,8 @@ int main ()
                 // Llamar a la función "cambiarBits"
                 do {
                     printf("Introduzca un número entero positivo: ");
-                    scanf("%d", &numero);
-                } while (numero < 0);
+                    scanf("%d", &n);
+                } while (n < 0);
                 do {
                     printf("Posición del bit inicial a invertir (0 - 31): ");
                     scanf("%d", &p);
@@ -135,8 +140,8 @@ int main ()
                     printf("Número de bits a invertir: ");
                     scanf("%d", &nbits);
                 } while (nbits <= 0 || nbits > p + 1);
-                resultado = cambiarBits(numero, p, nbits);
-                printf("\nNúmero original: %d\n", numero);
+                resultado = cambiarBits(n, p, nbits);
+                printf("\nNúmero original: %d\n", n);
                 printf("Número transformado: %d\n", resultado);
         }
                 break;
@@ -164,7 +169,7 @@ int main ()
         opcion = menu(); // llamar a la función "menu"
     }
     return 0; //Final del programa
-}
+
 // DEFINICIONES DE FUNCIONES
 int desplazar(int n, int nPos) {
     int nDesplazado = 0;
